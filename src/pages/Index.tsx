@@ -14,11 +14,16 @@ interface CookieCard {
 }
 
 const cookieCharacters: CookieCard[] = [
-  { id: 1, name: 'GingerBrave Cookie', value: 5, emoji: '🍪', image: 'https://cdn.poehali.dev/files/a0d5b1e6-c725-40d2-bb21-0425549a98fc.png' },
-  { id: 2, name: 'Strawberry Cookie', value: 3, emoji: '🍓', image: 'https://cdn.poehali.dev/files/74c21ac4-7f6d-47b2-9438-3b9407ea7694.png' },
-  { id: 3, name: 'Ninja Cookie', value: 7, emoji: '🥷', image: 'https://cdn.poehali.dev/files/8a06d6df-f6ae-4202-a26f-4ae17869d4bd.png' },
-  { id: 4, name: 'Wizard Cookie', value: 9, emoji: '🧙', image: 'https://cdn.poehali.dev/files/0596d764-5739-46ce-aba2-876fc07f8261.png' },
-  { id: 5, name: 'Angel Cookie', value: 6, emoji: '👼', image: 'https://cdn.poehali.dev/files/27246455-da33-4436-901b-d02d369ed0ab.png' },
+  { id: 1, name: 'GingerBrave', value: 5, emoji: '🍪', image: 'https://cdn.poehali.dev/files/c269aa39-32b1-41aa-b99e-40537e36b972.png' },
+  { id: 2, name: 'Strawberry', value: 3, emoji: '🍓', image: 'https://cdn.poehali.dev/files/ec84e32e-f83f-44ab-a153-355eef393f09.png' },
+  { id: 3, name: 'Ninja', value: 7, emoji: '🥷', image: 'https://cdn.poehali.dev/files/dca35e91-0bb5-4691-85db-2392921e335f.png' },
+  { id: 4, name: 'Wizard', value: 9, emoji: '🧙', image: 'https://cdn.poehali.dev/files/9e1e1dde-f8c0-4b9e-a75a-a38272642890.png' },
+  { id: 5, name: 'Muscle', value: 10, emoji: '💪', image: 'https://cdn.poehali.dev/files/e1afe883-1ec6-4a46-80f5-6d85dc5829f9.png' },
+  { id: 6, name: 'GingerBrave', value: 5, emoji: '🍪', image: 'https://cdn.poehali.dev/files/c269aa39-32b1-41aa-b99e-40537e36b972.png' },
+  { id: 7, name: 'Strawberry', value: 3, emoji: '🍓', image: 'https://cdn.poehali.dev/files/ec84e32e-f83f-44ab-a153-355eef393f09.png' },
+  { id: 8, name: 'Ninja', value: 7, emoji: '🥷', image: 'https://cdn.poehali.dev/files/dca35e91-0bb5-4691-85db-2392921e335f.png' },
+  { id: 9, name: 'Wizard', value: 9, emoji: '🧙', image: 'https://cdn.poehali.dev/files/9e1e1dde-f8c0-4b9e-a75a-a38272642890.png' },
+  { id: 10, name: 'Muscle', value: 10, emoji: '💪', image: 'https://cdn.poehali.dev/files/e1afe883-1ec6-4a46-80f5-6d85dc5829f9.png' },
 ];
 
 const shadowMilkImages = {
@@ -278,18 +283,25 @@ const Index = () => {
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8 items-center">
-                  <Card className={`p-8 bg-white border-4 border-cookie-dark shadow-2xl rounded-3xl ${flipped && !showResult ? 'animate-flip' : ''}`}>
-                    <div className="text-center">
-                      <p className="text-xl font-heading mb-4 text-cookie-dark/70">Текущая карта</p>
+                  <Card className={`p-6 bg-white border-8 border-cookie-dark shadow-2xl rounded-2xl relative overflow-hidden w-80 h-[480px] flex flex-col mx-auto ${flipped && !showResult ? 'animate-flip' : ''}`}>
+                    <div className="absolute top-3 left-3">
+                      <div className="text-2xl font-heading text-cookie-dark leading-none">{currentCard?.value}</div>
+                      <div className="text-3xl">{currentCard?.emoji}</div>
+                    </div>
+                    <div className="absolute bottom-3 right-3 transform rotate-180">
+                      <div className="text-2xl font-heading text-cookie-dark leading-none">{currentCard?.value}</div>
+                      <div className="text-3xl">{currentCard?.emoji}</div>
+                    </div>
+                    <div className="flex-1 flex flex-col items-center justify-center">
                       <img 
                         src={currentCard?.image} 
                         alt={currentCard?.name}
-                        className="w-48 h-48 mx-auto mb-4 object-contain"
+                        className="w-56 h-56 object-contain mb-3"
                       />
-                      <h3 className="text-2xl font-heading text-cookie-dark mb-2">{currentCard?.name}</h3>
-                      <div className="inline-block bg-cookie-purple text-white px-6 py-3 rounded-xl text-3xl font-heading border-4 border-cookie-dark">
-                        {currentCard?.value}
-                      </div>
+                      <h3 className="text-xl font-heading text-cookie-dark uppercase tracking-wide">{currentCard?.name}</h3>
+                    </div>
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl opacity-5 pointer-events-none">
+                      {currentCard?.emoji}
                     </div>
                   </Card>
 
@@ -347,26 +359,40 @@ const Index = () => {
                     )}
                   </div>
 
-                  <Card className={`p-8 bg-gradient-to-br from-cookie-purple to-cookie-pink border-4 border-cookie-dark shadow-2xl rounded-3xl relative overflow-hidden ${flipped ? 'animate-flip-back' : ''}`}>
+                  <Card className={`p-6 border-8 border-cookie-dark shadow-2xl rounded-2xl relative overflow-hidden w-80 h-[480px] flex flex-col mx-auto ${flipped ? 'animate-flip-back' : ''} ${
+                    !showResult 
+                      ? 'bg-gradient-to-br from-cookie-purple via-cookie-pink to-cookie-gold' 
+                      : 'bg-white'
+                  }`}>
                     {!showResult ? (
-                      <div className="text-center h-full flex flex-col justify-center">
-                        <p className="text-xl font-heading mb-4 text-white drop-shadow-md">Следующая карта</p>
-                        <div className="text-9xl mb-4">❓</div>
-                        <h3 className="text-2xl font-heading text-white drop-shadow-md">Угадай!</h3>
+                      <div className="flex-1 flex flex-col items-center justify-center">
+                        <p className="text-2xl font-heading mb-6 text-white drop-shadow-lg">Следующая карта</p>
+                        <div className="text-9xl mb-6 animate-bounce">❓</div>
+                        <h3 className="text-3xl font-heading text-white drop-shadow-lg">Угадай!</h3>
                       </div>
                     ) : (
-                      <div className="text-center animate-bounce-in">
-                        <p className="text-xl font-heading mb-4 text-white drop-shadow-md">
-                          {isCorrect ? '✅ Правильно!' : '❌ Неверно!'}
-                        </p>
-                        <img 
-                          src={nextCard?.image} 
-                          alt={nextCard?.name}
-                          className="w-48 h-48 mx-auto mb-4 object-contain"
-                        />
-                        <h3 className="text-2xl font-heading text-white drop-shadow-md mb-2">{nextCard?.name}</h3>
-                        <div className="inline-block bg-white text-cookie-dark px-6 py-3 rounded-xl text-3xl font-heading border-4 border-cookie-dark">
-                          {nextCard?.value}
+                      <div className="animate-bounce-in h-full flex flex-col">
+                        <div className="absolute top-3 left-3">
+                          <div className="text-2xl font-heading text-cookie-dark leading-none">{nextCard?.value}</div>
+                          <div className="text-3xl">{nextCard?.emoji}</div>
+                        </div>
+                        <div className="absolute bottom-3 right-3 transform rotate-180">
+                          <div className="text-2xl font-heading text-cookie-dark leading-none">{nextCard?.value}</div>
+                          <div className="text-3xl">{nextCard?.emoji}</div>
+                        </div>
+                        <div className="flex-1 flex flex-col items-center justify-center">
+                          <p className="text-2xl font-heading mb-4 text-cookie-dark">
+                            {isCorrect ? '✅ Правильно!' : '❌ Неверно!'}
+                          </p>
+                          <img 
+                            src={nextCard?.image} 
+                            alt={nextCard?.name}
+                            className="w-56 h-56 object-contain mb-3"
+                          />
+                          <h3 className="text-xl font-heading text-cookie-dark uppercase tracking-wide">{nextCard?.name}</h3>
+                        </div>
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl opacity-5 pointer-events-none">
+                          {nextCard?.emoji}
                         </div>
                       </div>
                     )}
