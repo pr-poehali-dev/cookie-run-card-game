@@ -41,6 +41,47 @@ const Index = () => {
   const [highScore, setHighScore] = useState(0);
   const [flipped, setFlipped] = useState(false);
 
+  const playSound = (type: 'flip' | 'correct' | 'wrong' | 'start') => {
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    if (type === 'flip') {
+      oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(600, audioContext.currentTime + 0.1);
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.1);
+    } else if (type === 'correct') {
+      oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime);
+      oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1);
+      oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2);
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.3);
+    } else if (type === 'wrong') {
+      oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 0.2);
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.2);
+    } else if (type === 'start') {
+      oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
+      oscillator.frequency.setValueAtTime(400, audioContext.currentTime + 0.1);
+      oscillator.frequency.setValueAtTime(500, audioContext.currentTime + 0.2);
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.3);
+    }
+  };
+
   const shuffleDeck = () => {
     const shuffled = [...cookieCharacters].sort(() => Math.random() - 0.5);
     setDeck(shuffled);
@@ -48,6 +89,7 @@ const Index = () => {
   };
 
   const startGame = () => {
+    playSound('start');
     const newDeck = shuffleDeck();
     setCurrentCard(newDeck[0]);
     setNextCard(newDeck[1]);
@@ -61,6 +103,7 @@ const Index = () => {
   const makeGuess = (guess: 'higher' | 'lower') => {
     if (!currentCard || !nextCard || showResult) return;
 
+    playSound('flip');
     setFlipped(true);
     
     setTimeout(() => {
@@ -70,6 +113,7 @@ const Index = () => {
 
       setIsCorrect(correct);
       setShowResult(true);
+      playSound(correct ? 'correct' : 'wrong');
 
       if (correct) {
         setScore(score + 10);
