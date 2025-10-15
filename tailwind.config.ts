@@ -118,6 +118,19 @@ export default {
 				'wiggle': {
 					'0%, 100%': { transform: 'rotate(-3deg)' },
 					'50%': { transform: 'rotate(3deg)' }
+				},
+				'shake': {
+					'0%, 100%': { transform: 'translateX(0)' },
+					'10%, 30%, 50%, 70%, 90%': { transform: 'translateX(-10px)' },
+					'20%, 40%, 60%, 80%': { transform: 'translateX(10px)' }
+				},
+				'jump': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-30px)' }
+				},
+				'spin-slow': {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(360deg)' }
 				}
 			},
 			animation: {
@@ -127,7 +140,10 @@ export default {
 				'flip-back': 'flip-back 0.6s ease-in-out',
 				'bounce-in': 'bounce-in 0.5s ease-out',
 				'slide-up': 'slide-up 0.4s ease-out',
-				'wiggle': 'wiggle 0.3s ease-in-out infinite'
+				'wiggle': 'wiggle 0.3s ease-in-out infinite',
+				'shake': 'shake 0.5s ease-in-out',
+				'jump': 'jump 0.6s ease-in-out',
+				'spin-slow': 'spin-slow 3s linear infinite'
 			}
 		}
 	},

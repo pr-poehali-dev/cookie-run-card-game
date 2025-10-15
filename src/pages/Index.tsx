@@ -237,12 +237,28 @@ const Index = () => {
                     </div>
                   </Card>
 
-                  <div className="flex justify-center">
+                  <div className="flex justify-center relative">
                     <img 
                       src={showResult ? (isCorrect ? shadowMilkImages.happy : shadowMilkImages.sad) : shadowMilkImages.neutral}
                       alt="Shadow Milk"
-                      className="w-56 h-56 object-contain transition-all duration-500"
+                      className={`w-56 h-56 object-contain transition-all duration-500 ${
+                        showResult 
+                          ? isCorrect 
+                            ? 'animate-jump scale-110' 
+                            : 'animate-shake opacity-80' 
+                          : 'hover:scale-105'
+                      }`}
                     />
+                    {showResult && isCorrect && (
+                      <div className="absolute -top-8 left-1/2 transform -translate-x-1/2">
+                        <span className="text-6xl animate-bounce-in">🌟</span>
+                      </div>
+                    )}
+                    {showResult && !isCorrect && (
+                      <div className="absolute -top-8 left-1/2 transform -translate-x-1/2">
+                        <span className="text-6xl animate-bounce-in">💔</span>
+                      </div>
+                    )}
                   </div>
 
                   <Card className={`p-8 bg-gradient-to-br from-cookie-purple to-cookie-pink border-4 border-cookie-dark shadow-2xl rounded-3xl relative overflow-hidden ${flipped ? 'animate-flip-back' : ''}`}>
