@@ -10,24 +10,31 @@ interface CookieCard {
   name: string;
   value: number;
   emoji: string;
+  image: string;
 }
 
 const cookieCharacters: CookieCard[] = [
-  { id: 1, name: 'GingerBrave', value: 5, emoji: '🍪' },
-  { id: 2, name: 'Strawberry Cookie', value: 3, emoji: '🍓' },
-  { id: 3, name: 'Wizard Cookie', value: 7, emoji: '🧙' },
-  { id: 4, name: 'Dark Choco Cookie', value: 9, emoji: '🍫' },
-  { id: 5, name: 'Mint Choco Cookie', value: 6, emoji: '🌿' },
-  { id: 6, name: 'Espresso Cookie', value: 8, emoji: '☕' },
-  { id: 7, name: 'Latte Cookie', value: 4, emoji: '🥛' },
-  { id: 8, name: 'Almond Cookie', value: 10, emoji: '🌰' },
-  { id: 9, name: 'Blackberry Cookie', value: 7, emoji: '🫐' },
-  { id: 10, name: 'Moon Rabbit Cookie', value: 2, emoji: '🐰' },
-  { id: 11, name: 'Pure Vanilla Cookie', value: 10, emoji: '✨' },
-  { id: 12, name: 'Hollyberry Cookie', value: 9, emoji: '🛡️' },
-  { id: 13, name: 'Sea Fairy Cookie', value: 8, emoji: '🧜' },
-  { id: 14, name: 'Frost Queen Cookie', value: 10, emoji: '❄️' },
+  { id: 1, name: 'GingerBrave', value: 5, emoji: '🍪', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/8fc3c5e5-a674-4a6b-a4f8-251eb841a2b3.jpg' },
+  { id: 2, name: 'Strawberry Cookie', value: 3, emoji: '🍓', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/0e1fedb3-8c82-4a62-9e24-0c783a846cfa.jpg' },
+  { id: 3, name: 'Wizard Cookie', value: 7, emoji: '🧙', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/41f3c613-9e9d-4192-a80c-8c8662287ae3.jpg' },
+  { id: 4, name: 'Dark Choco Cookie', value: 9, emoji: '🍫', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/fd1f33d7-2cc7-4e81-ac83-36f771cf79d9.jpg' },
+  { id: 5, name: 'Mint Choco Cookie', value: 6, emoji: '🌿', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
+  { id: 6, name: 'Espresso Cookie', value: 8, emoji: '☕', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
+  { id: 7, name: 'Latte Cookie', value: 4, emoji: '🥛', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
+  { id: 8, name: 'Almond Cookie', value: 10, emoji: '🌰', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
+  { id: 9, name: 'Blackberry Cookie', value: 7, emoji: '🫐', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
+  { id: 10, name: 'Moon Rabbit Cookie', value: 2, emoji: '🐰', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
+  { id: 11, name: 'Pure Vanilla Cookie', value: 10, emoji: '✨', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
+  { id: 12, name: 'Hollyberry Cookie', value: 9, emoji: '🛡️', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
+  { id: 13, name: 'Sea Fairy Cookie', value: 8, emoji: '🧜', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
+  { id: 14, name: 'Frost Queen Cookie', value: 10, emoji: '❄️', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
 ];
+
+const shadowMilkImages = {
+  neutral: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/eba96e9a-0b67-4f27-be99-f1fc18932730.jpg',
+  happy: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/48693906-1d43-494b-b32d-65ebea4ab966.jpg',
+  sad: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/1cd1973b-7706-48f4-b7c0-f7c266f3234a.jpg'
+};
 
 const Index = () => {
   const [deck, setDeck] = useState<CookieCard[]>([]);
@@ -182,7 +189,11 @@ const Index = () => {
           <TabsContent value="game" className="animate-slide-up">
             {!gameStarted ? (
               <Card className="p-12 text-center bg-white/95 backdrop-blur-sm border-4 border-cookie-dark shadow-2xl rounded-3xl animate-bounce-in">
-                <div className="mb-8 text-8xl animate-wiggle">🍪</div>
+                <img 
+                  src={shadowMilkImages.neutral} 
+                  alt="Shadow Milk Cookie" 
+                  className="w-64 h-64 mx-auto mb-6 object-contain animate-wiggle"
+                />
                 <h2 className="text-4xl font-heading mb-4 text-cookie-dark">Добро пожаловать!</h2>
                 <p className="text-xl mb-8 text-cookie-dark/80 font-semibold">Шедоу Милк приглашает тебя сыграть в "Больше-Меньше"</p>
                 <Button 
@@ -210,17 +221,29 @@ const Index = () => {
                   </div>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-8">
+                <div className="grid md:grid-cols-3 gap-8 items-center">
                   <Card className={`p-8 bg-white border-4 border-cookie-dark shadow-2xl rounded-3xl ${flipped && !showResult ? 'animate-flip' : ''}`}>
                     <div className="text-center">
                       <p className="text-xl font-heading mb-4 text-cookie-dark/70">Текущая карта</p>
-                      <div className="text-9xl mb-4">{currentCard?.emoji}</div>
+                      <img 
+                        src={currentCard?.image} 
+                        alt={currentCard?.name}
+                        className="w-48 h-48 mx-auto mb-4 object-contain"
+                      />
                       <h3 className="text-2xl font-heading text-cookie-dark mb-2">{currentCard?.name}</h3>
                       <div className="inline-block bg-cookie-purple text-white px-6 py-3 rounded-xl text-3xl font-heading border-4 border-cookie-dark">
                         {currentCard?.value}
                       </div>
                     </div>
                   </Card>
+
+                  <div className="flex justify-center">
+                    <img 
+                      src={showResult ? (isCorrect ? shadowMilkImages.happy : shadowMilkImages.sad) : shadowMilkImages.neutral}
+                      alt="Shadow Milk"
+                      className="w-56 h-56 object-contain transition-all duration-500"
+                    />
+                  </div>
 
                   <Card className={`p-8 bg-gradient-to-br from-cookie-purple to-cookie-pink border-4 border-cookie-dark shadow-2xl rounded-3xl relative overflow-hidden ${flipped ? 'animate-flip-back' : ''}`}>
                     {!showResult ? (
@@ -234,7 +257,11 @@ const Index = () => {
                         <p className="text-xl font-heading mb-4 text-white drop-shadow-md">
                           {isCorrect ? '✅ Правильно!' : '❌ Неверно!'}
                         </p>
-                        <div className="text-9xl mb-4">{nextCard?.emoji}</div>
+                        <img 
+                          src={nextCard?.image} 
+                          alt={nextCard?.name}
+                          className="w-48 h-48 mx-auto mb-4 object-contain"
+                        />
                         <h3 className="text-2xl font-heading text-white drop-shadow-md mb-2">{nextCard?.name}</h3>
                         <div className="inline-block bg-white text-cookie-dark px-6 py-3 rounded-xl text-3xl font-heading border-4 border-cookie-dark">
                           {nextCard?.value}
@@ -274,7 +301,11 @@ const Index = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
                 {cookieCharacters.map((char) => (
                   <Card key={char.id} className="p-4 text-center hover:scale-110 transition-transform border-2 border-cookie-purple bg-gradient-to-br from-white to-cookie-purple/10">
-                    <div className="text-5xl mb-2">{char.emoji}</div>
+                    <img 
+                      src={char.image} 
+                      alt={char.name}
+                      className="w-20 h-20 mx-auto mb-2 object-contain"
+                    />
                     <p className="text-sm font-heading text-cookie-dark mb-1">{char.name}</p>
                     <div className="inline-block bg-cookie-pink text-white px-3 py-1 rounded-lg text-lg font-heading">
                       {char.value}
