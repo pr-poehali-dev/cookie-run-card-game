@@ -14,20 +14,11 @@ interface CookieCard {
 }
 
 const cookieCharacters: CookieCard[] = [
-  { id: 1, name: 'GingerBrave', value: 5, emoji: '🍪', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/8fc3c5e5-a674-4a6b-a4f8-251eb841a2b3.jpg' },
-  { id: 2, name: 'Strawberry Cookie', value: 3, emoji: '🍓', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/0e1fedb3-8c82-4a62-9e24-0c783a846cfa.jpg' },
-  { id: 3, name: 'Wizard Cookie', value: 7, emoji: '🧙', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/41f3c613-9e9d-4192-a80c-8c8662287ae3.jpg' },
-  { id: 4, name: 'Dark Choco Cookie', value: 9, emoji: '🍫', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/fd1f33d7-2cc7-4e81-ac83-36f771cf79d9.jpg' },
-  { id: 5, name: 'Mint Choco Cookie', value: 6, emoji: '🌿', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
-  { id: 6, name: 'Espresso Cookie', value: 8, emoji: '☕', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
-  { id: 7, name: 'Latte Cookie', value: 4, emoji: '🥛', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
-  { id: 8, name: 'Almond Cookie', value: 10, emoji: '🌰', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
-  { id: 9, name: 'Blackberry Cookie', value: 7, emoji: '🫐', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
-  { id: 10, name: 'Moon Rabbit Cookie', value: 2, emoji: '🐰', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
-  { id: 11, name: 'Pure Vanilla Cookie', value: 10, emoji: '✨', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
-  { id: 12, name: 'Hollyberry Cookie', value: 9, emoji: '🛡️', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
-  { id: 13, name: 'Sea Fairy Cookie', value: 8, emoji: '🧜', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
-  { id: 14, name: 'Frost Queen Cookie', value: 10, emoji: '❄️', image: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/cebe6dd9-2381-41b0-a3ad-b947dbe884e1.jpg' },
+  { id: 1, name: 'GingerBrave Cookie', value: 5, emoji: '🍪', image: 'https://cdn.poehali.dev/files/a0d5b1e6-c725-40d2-bb21-0425549a98fc.png' },
+  { id: 2, name: 'Strawberry Cookie', value: 3, emoji: '🍓', image: 'https://cdn.poehali.dev/files/74c21ac4-7f6d-47b2-9438-3b9407ea7694.png' },
+  { id: 3, name: 'Ninja Cookie', value: 7, emoji: '🥷', image: 'https://cdn.poehali.dev/files/8a06d6df-f6ae-4202-a26f-4ae17869d4bd.png' },
+  { id: 4, name: 'Wizard Cookie', value: 9, emoji: '🧙', image: 'https://cdn.poehali.dev/files/0596d764-5739-46ce-aba2-876fc07f8261.png' },
+  { id: 5, name: 'Angel Cookie', value: 6, emoji: '👼', image: 'https://cdn.poehali.dev/files/27246455-da33-4436-901b-d02d369ed0ab.png' },
 ];
 
 const shadowMilkImages = {
