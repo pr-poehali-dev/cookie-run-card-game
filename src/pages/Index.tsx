@@ -31,9 +31,33 @@ const cookieCharacters: CookieCard[] = [
 ];
 
 const shadowMilkImages = {
-  neutral: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/eba96e9a-0b67-4f27-be99-f1fc18932730.jpg',
-  happy: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/48693906-1d43-494b-b32d-65ebea4ab966.jpg',
-  sad: 'https://cdn.poehali.dev/projects/c8cdd174-fdfc-4a4d-a675-3cf2fc31d870/files/1cd1973b-7706-48f4-b7c0-f7c266f3234a.jpg'
+  neutral: 'https://cdn.poehali.dev/files/8ef4d7f8-aa72-4ca9-951f-b962175269d4.png',
+  happy: 'https://cdn.poehali.dev/files/7b0428c9-2323-4a13-b18f-8327e43edc44.png',
+  sad: 'https://cdn.poehali.dev/files/681e5ed6-60e2-4106-a85a-1dee91ce4e09.png',
+  excited: 'https://cdn.poehali.dev/files/d955fe8a-fb09-4d3c-ac38-690ae03bf0c5.png',
+  laughing: 'https://cdn.poehali.dev/files/aa031388-2674-430c-9dfb-8329d9bef8e3.png'
+};
+
+const shadowMilkDialogues = {
+  playerWins: [
+    'Что?! Нет-нет-нет! Это нечестно!',
+    'Ты просто повезло! Следующий раз ты не угадаешь!',
+    'Гррр! Как ты посмел!',
+    'Нет! Моя игра, мои правила!',
+    'Хватит угадывать! Это же скучно!'
+  ],
+  playerLoses: [
+    'Ха-ха-ха! Я же говорил!',
+    'Ох как весело! Ты проиграл!',
+    'Великолепно! Поражение - лучшее зрелище!',
+    'Ты такой предсказуемый! Ха-ха!',
+    'Ох, какой сладкий провал!'
+  ],
+  neutral: [
+    'Ну же, давай, угадывай!',
+    'Это будет интересно...',
+    'Посмотрим, что ты выберешь!'
+  ]
 };
 
 const Index = () => {
@@ -47,6 +71,7 @@ const Index = () => {
   const [isCorrect, setIsCorrect] = useState(false);
   const [highScore, setHighScore] = useState(0);
   const [flipped, setFlipped] = useState(false);
+  const [shadowDialogue, setShadowDialogue] = useState('');
 
   const playSound = (type: 'flip' | 'correct' | 'wrong' | 'start') => {
     const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
@@ -105,6 +130,7 @@ const Index = () => {
     setGameStarted(true);
     setShowResult(false);
     setFlipped(false);
+    setShadowDialogue(shadowMilkDialogues.neutral[Math.floor(Math.random() * shadowMilkDialogues.neutral.length)]);
   };
 
   const makeGuess = (guess: 'higher' | 'lower') => {
@@ -128,8 +154,10 @@ const Index = () => {
         if (score + 10 > highScore) {
           setHighScore(score + 10);
         }
+        setShadowDialogue(shadowMilkDialogues.playerWins[Math.floor(Math.random() * shadowMilkDialogues.playerWins.length)]);
       } else {
         setStreak(0);
+        setShadowDialogue(shadowMilkDialogues.playerLoses[Math.floor(Math.random() * shadowMilkDialogues.playerLoses.length)]);
       }
 
       setTimeout(() => {
@@ -237,26 +265,34 @@ const Index = () => {
                     </div>
                   </Card>
 
-                  <div className="flex justify-center relative">
-                    <img 
-                      src={showResult ? (isCorrect ? shadowMilkImages.happy : shadowMilkImages.sad) : shadowMilkImages.neutral}
-                      alt="Shadow Milk"
-                      className={`w-56 h-56 object-contain transition-all duration-500 ${
-                        showResult 
-                          ? isCorrect 
-                            ? 'animate-jump scale-110' 
-                            : 'animate-shake opacity-80' 
-                          : 'hover:scale-105'
-                      }`}
-                    />
-                    {showResult && isCorrect && (
-                      <div className="absolute -top-8 left-1/2 transform -translate-x-1/2">
-                        <span className="text-6xl animate-bounce-in">🌟</span>
-                      </div>
-                    )}
-                    {showResult && !isCorrect && (
-                      <div className="absolute -top-8 left-1/2 transform -translate-x-1/2">
-                        <span className="text-6xl animate-bounce-in">💔</span>
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="relative">
+                      <img 
+                        src={showResult ? (isCorrect ? shadowMilkImages.sad : shadowMilkImages.laughing) : shadowMilkImages.neutral}
+                        alt="Shadow Milk"
+                        className={`w-64 h-64 object-contain transition-all duration-500 ${
+                          showResult 
+                            ? isCorrect 
+                              ? 'animate-shake' 
+                              : 'animate-jump scale-110' 
+                            : 'hover:scale-105'
+                        }`}
+                      />
+                      {showResult && !isCorrect && (
+                        <div className="absolute -top-4 -right-4">
+                          <span className="text-5xl animate-bounce-in">😈</span>
+                        </div>
+                      )}
+                      {showResult && isCorrect && (
+                        <div className="absolute -top-4 -right-4">
+                          <span className="text-5xl animate-bounce-in">😤</span>
+                        </div>
+                      )}
+                    </div>
+                    {shadowDialogue && (
+                      <div className="bg-white/95 backdrop-blur-sm border-4 border-cookie-dark rounded-2xl p-4 max-w-xs shadow-xl relative animate-bounce-in">
+                        <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-white"></div>
+                        <p className="text-lg font-heading text-cookie-dark text-center">{shadowDialogue}</p>
                       </div>
                     )}
                   </div>
