@@ -35,7 +35,12 @@ const shadowMilkImages = {
   happy: 'https://cdn.poehali.dev/files/7b0428c9-2323-4a13-b18f-8327e43edc44.png',
   sad: 'https://cdn.poehali.dev/files/681e5ed6-60e2-4106-a85a-1dee91ce4e09.png',
   excited: 'https://cdn.poehali.dev/files/d955fe8a-fb09-4d3c-ac38-690ae03bf0c5.png',
-  laughing: 'https://cdn.poehali.dev/files/aa031388-2674-430c-9dfb-8329d9bef8e3.png'
+  laughing: 'https://cdn.poehali.dev/files/aa031388-2674-430c-9dfb-8329d9bef8e3.png',
+  crying: 'https://cdn.poehali.dev/files/05ac9a59-1ec7-4343-a7e7-b028de9d504a.png',
+  evil: 'https://cdn.poehali.dev/files/28ed6cdf-d438-4f10-966e-b24ba765a8d1.png',
+  smug: 'https://cdn.poehali.dev/files/887206e3-e955-4a4d-81f4-cd2336377b93.png',
+  worried: 'https://cdn.poehali.dev/files/12988d79-82c4-40b7-ae21-8f269a1bc9a9.png',
+  angry: 'https://cdn.poehali.dev/files/092068e9-194e-467b-a42c-6f936f45dc15.png'
 };
 
 const shadowMilkDialogues = {
@@ -57,6 +62,21 @@ const shadowMilkDialogues = {
     'Ну же, давай, угадывай!',
     'Это будет интересно...',
     'Посмотрим, что ты выберешь!'
+  ],
+  streak3: [
+    'Что?! Три подряд? Это случайность!',
+    'Гррр! Ты начинаешь меня раздражать!',
+    'Нет-нет-нет! Не может быть!'
+  ],
+  streak5: [
+    'ХватиТ! ПЯТЬ ПОДРЯД?! ТЫ ЖУЛЬНИЧАЕШЬ!',
+    'Я В ЯРОСТИ!!! КАК ТЫ ПОСМЕЛ?!',
+    'НЕВОЗМОЖНО! Я НЕ ПОЗВОЛЮ ЭТОМУ ПРОДОЛЖАТЬСЯ!'
+  ],
+  streak10: [
+    'ТЫ... ТЫ ПОБЕДИЛ МЕНЯ?! НЕТ! ЭТОГО НЕ МОЖЕТ БЫТЬ!!!',
+    'ДЕСЯТЬ?! Я... я проиграл... ЭТО НЕВОЗМОЖНО!',
+    'Ты... ты настоящий мастер... НО Я ВЕРНУСЬ!'
   ]
 };
 
@@ -150,11 +170,21 @@ const Index = () => {
 
       if (correct) {
         setScore(score + 10);
-        setStreak(streak + 1);
+        const newStreak = streak + 1;
+        setStreak(newStreak);
         if (score + 10 > highScore) {
           setHighScore(score + 10);
         }
-        setShadowDialogue(shadowMilkDialogues.playerWins[Math.floor(Math.random() * shadowMilkDialogues.playerWins.length)]);
+        
+        if (newStreak >= 10) {
+          setShadowDialogue(shadowMilkDialogues.streak10[Math.floor(Math.random() * shadowMilkDialogues.streak10.length)]);
+        } else if (newStreak >= 5) {
+          setShadowDialogue(shadowMilkDialogues.streak5[Math.floor(Math.random() * shadowMilkDialogues.streak5.length)]);
+        } else if (newStreak >= 3) {
+          setShadowDialogue(shadowMilkDialogues.streak3[Math.floor(Math.random() * shadowMilkDialogues.streak3.length)]);
+        } else {
+          setShadowDialogue(shadowMilkDialogues.playerWins[Math.floor(Math.random() * shadowMilkDialogues.playerWins.length)]);
+        }
       } else {
         setStreak(0);
         setShadowDialogue(shadowMilkDialogues.playerLoses[Math.floor(Math.random() * shadowMilkDialogues.playerLoses.length)]);
@@ -239,9 +269,16 @@ const Index = () => {
                     <p className="text-sm font-heading text-cookie-dark/70">Очки</p>
                     <p className="text-4xl font-heading text-cookie-pink">{score}</p>
                   </div>
-                  <div className="text-center">
+                  <div className="text-center relative">
                     <p className="text-sm font-heading text-cookie-dark/70">Серия</p>
-                    <p className="text-4xl font-heading text-cookie-purple">{streak} 🔥</p>
+                    <p className={`text-4xl font-heading ${streak >= 5 ? 'text-cookie-gold animate-bounce-in' : 'text-cookie-purple'}`}>
+                      {streak} {streak >= 10 ? '🏆' : streak >= 5 ? '⚡' : streak >= 3 ? '🔥' : ''}
+                    </p>
+                    {streak >= 5 && (
+                      <div className="absolute -top-2 -right-2 bg-cookie-gold text-white px-2 py-1 rounded-full text-xs font-heading animate-bounce-in">
+                        {streak >= 10 ? 'МАСТЕР!' : 'ОГОНЬ!'}
+                      </div>
+                    )}
                   </div>
                   <div className="text-center">
                     <p className="text-sm font-heading text-cookie-dark/70">Рекорд</p>
@@ -268,12 +305,19 @@ const Index = () => {
                   <div className="flex flex-col items-center gap-4">
                     <div className="relative">
                       <img 
-                        src={showResult ? (isCorrect ? shadowMilkImages.sad : shadowMilkImages.laughing) : shadowMilkImages.neutral}
+                        src={
+                          showResult 
+                            ? (isCorrect 
+                                ? (streak >= 10 ? shadowMilkImages.crying : streak >= 5 ? shadowMilkImages.angry : streak >= 3 ? shadowMilkImages.worried : shadowMilkImages.sad)
+                                : shadowMilkImages.laughing
+                              )
+                            : shadowMilkImages.neutral
+                        }
                         alt="Shadow Milk"
                         className={`w-64 h-64 object-contain transition-all duration-500 ${
                           showResult 
                             ? isCorrect 
-                              ? 'animate-shake' 
+                              ? (streak >= 5 ? 'animate-shake scale-90' : 'animate-shake')
                               : 'animate-jump scale-110' 
                             : 'hover:scale-105'
                         }`}
@@ -283,9 +327,24 @@ const Index = () => {
                           <span className="text-5xl animate-bounce-in">😈</span>
                         </div>
                       )}
-                      {showResult && isCorrect && (
+                      {showResult && isCorrect && streak >= 10 && (
+                        <div className="absolute -top-4 -right-4">
+                          <span className="text-5xl animate-bounce-in">💀</span>
+                        </div>
+                      )}
+                      {showResult && isCorrect && streak >= 5 && streak < 10 && (
+                        <div className="absolute -top-4 -right-4">
+                          <span className="text-5xl animate-bounce-in">😱</span>
+                        </div>
+                      )}
+                      {showResult && isCorrect && streak >= 3 && streak < 5 && (
                         <div className="absolute -top-4 -right-4">
                           <span className="text-5xl animate-bounce-in">😤</span>
+                        </div>
+                      )}
+                      {showResult && isCorrect && streak < 3 && (
+                        <div className="absolute -top-4 -right-4">
+                          <span className="text-5xl animate-bounce-in">😠</span>
                         </div>
                       )}
                     </div>
