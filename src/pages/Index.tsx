@@ -80,9 +80,21 @@ const Index = () => {
   const [shadowMood, setShadowMood] = useState<keyof typeof shadowMilkImages>('neutral');
   const [isShuffling, setIsShuffling] = useState(false);
   const [isDealingCard, setIsDealingCard] = useState(false);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
+  const [backgroundMusic, setBackgroundMusic] = useState<OscillatorNode | null>(null);
 
-  const playSound = (type: 'flip' | 'correct' | 'wrong' | 'start' | 'shuffle') => {
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+  useEffect(() => {
+    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    setAudioContext(ctx);
+    return () => {
+      ctx.close();
+    };
+  }, []);
+
+  const playSound = (type: 'flip' | 'correct' | 'wrong' | 'start' | 'shuffle' | 'deal') => {
+    if (!audioContext) return;
+    
     const oscillator = audioContext.createOscillator();
     const gainNode = audioContext.createGain();
     
@@ -111,7 +123,28 @@ const Index = () => {
       gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
       oscillator.start(audioContext.currentTime);
       oscillator.stop(audioContext.currentTime + 0.2);
-    } else if (type === 'start' || type === 'shuffle') {
+    } else if (type === 'shuffle') {
+      for (let i = 0; i < 8; i++) {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+        
+        osc.frequency.setValueAtTime(200 + Math.random() * 200, audioContext.currentTime + i * 0.08);
+        gain.gain.setValueAtTime(0.15, audioContext.currentTime + i * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + i * 0.08 + 0.08);
+        osc.start(audioContext.currentTime + i * 0.08);
+        osc.stop(audioContext.currentTime + i * 0.08 + 0.08);
+      }
+    } else if (type === 'deal') {
+      oscillator.type = 'triangle';
+      oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(150, audioContext.currentTime + 0.15);
+      gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.15);
+    } else if (type === 'start') {
       oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
       oscillator.frequency.setValueAtTime(400, audioContext.currentTime + 0.1);
       oscillator.frequency.setValueAtTime(500, audioContext.currentTime + 0.2);
@@ -119,6 +152,58 @@ const Index = () => {
       gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
       oscillator.start(audioContext.currentTime);
       oscillator.stop(audioContext.currentTime + 0.3);
+    }
+  };
+
+  const toggleBackgroundMusic = () => {
+    if (!audioContext) return;
+
+    if (isMusicPlaying && backgroundMusic) {
+      backgroundMusic.stop();
+      setBackgroundMusic(null);
+      setIsMusicPlaying(false);
+    } else {
+      const osc1 = audioContext.createOscillator();
+      const osc2 = audioContext.createOscillator();
+      const osc3 = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      const filter = audioContext.createBiquadFilter();
+
+      osc1.type = 'sine';
+      osc2.type = 'sine';
+      osc3.type = 'sine';
+      filter.type = 'lowpass';
+      filter.frequency.value = 800;
+
+      osc1.connect(filter);
+      osc2.connect(filter);
+      osc3.connect(filter);
+      filter.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      gainNode.gain.value = 0.08;
+
+      const now = audioContext.currentTime;
+      const pattern = [196, 220, 246.94, 220, 196, 220, 246.94, 293.66];
+      const time = now;
+
+      const playLoop = () => {
+        pattern.forEach((freq, i) => {
+          osc1.frequency.setValueAtTime(freq, time + i * 0.4);
+          osc2.frequency.setValueAtTime(freq * 1.5, time + i * 0.4);
+          osc3.frequency.setValueAtTime(freq * 0.5, time + i * 0.4);
+        });
+      };
+
+      playLoop();
+      setInterval(playLoop, pattern.length * 400);
+
+      osc1.start(now);
+      osc2.start(now);
+      osc3.start(now);
+
+      setBackgroundMusic(osc1);
+      setIsMusicPlaying(true);
     }
   };
 
@@ -130,6 +215,7 @@ const Index = () => {
 
   const startGame = () => {
     playSound('start');
+    playSound('shuffle');
     setIsShuffling(true);
     setShadowMood('excited');
     setShadowDialogue(shadowMilkDialogues.shuffle[Math.floor(Math.random() * shadowMilkDialogues.shuffle.length)]);
@@ -146,6 +232,7 @@ const Index = () => {
       setIsShuffling(false);
       setShadowMood('neutral');
       setShadowDialogue(shadowMilkDialogues.neutral[Math.floor(Math.random() * shadowMilkDialogues.neutral.length)]);
+      playSound('deal');
     }, 1500);
   };
 
@@ -153,6 +240,7 @@ const Index = () => {
     if (!currentCard || !nextCard || showResult) return;
 
     playSound('flip');
+    playSound('deal');
     setFlipped(true);
     setIsDealingCard(true);
     
@@ -269,13 +357,21 @@ const Index = () => {
                   </p>
                 </div>
               </div>
-              <Button 
-                onClick={startGame}
-                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-2xl px-12 py-6 rounded-2xl border-4 border-purple-900 shadow-2xl transform hover:scale-105 transition-all"
-              >
-                <Icon name="Play" className="mr-3" size={32} />
-                Начать Игру
-              </Button>
+              <div className="flex gap-4 justify-center items-center">
+                <Button 
+                  onClick={startGame}
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-2xl px-12 py-6 rounded-2xl border-4 border-purple-900 shadow-2xl transform hover:scale-105 transition-all"
+                >
+                  <Icon name="Play" className="mr-3" size={32} />
+                  Начать Игру
+                </Button>
+                <Button 
+                  onClick={toggleBackgroundMusic}
+                  className={`${isMusicPlaying ? 'bg-gradient-to-r from-green-600 to-emerald-600' : 'bg-gradient-to-r from-gray-600 to-gray-700'} hover:opacity-90 text-white text-xl px-8 py-6 rounded-2xl border-4 border-gray-900 shadow-2xl transform hover:scale-105 transition-all`}
+                >
+                  <Icon name={isMusicPlaying ? 'Volume2' : 'VolumeX'} size={28} />
+                </Button>
+              </div>
             </div>
           ) : (
             <div className="space-y-8">
