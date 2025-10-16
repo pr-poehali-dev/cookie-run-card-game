@@ -7,11 +7,11 @@ export interface CookieCard {
 }
 
 export const cookieCharacters: CookieCard[] = [
-  { id: 1, name: 'Pure Vanilla', value: 10, emoji: '🌸', image: 'https://cdn.poehali.dev/files/5c433d73-38b9-4dab-a72b-05d145a2655d.png' },
+  { id: 1, name: 'White Lily', value: 10, emoji: '🌺', image: 'https://cdn.poehali.dev/files/5c433d73-38b9-4dab-a72b-05d145a2655d.png' },
   { id: 2, name: 'Hollyberry', value: 8, emoji: '❤️', image: 'https://cdn.poehali.dev/files/1f50f05f-9fdf-4b1e-9cbf-a1ec9bd0e801.png' },
   { id: 3, name: 'Dark Cacao', value: 9, emoji: '⚔️', image: 'https://cdn.poehali.dev/files/08c35e14-e27e-4d3c-a8a2-02c1756643e0.png' },
   { id: 4, name: 'Golden Cheese', value: 7, emoji: '✨', image: 'https://cdn.poehali.dev/files/b9ea5964-f908-4b2f-a170-5a1714c727cb.png' },
-  { id: 5, name: 'White Lily', value: 6, emoji: '🌺', image: 'https://cdn.poehali.dev/files/4a469a67-81c2-425a-8c6e-f1277af504f7.png' }
+  { id: 5, name: 'Pure Vanilla', value: 6, emoji: '🌸', image: 'https://cdn.poehali.dev/files/4a469a67-81c2-425a-8c6e-f1277af504f7.png' }
 ];
 
 export const shadowMilkImages = {
@@ -51,6 +51,11 @@ export const shadowMilkDialogues = {
     'О, мой милый Силли-Ванилли! Давно не виделись!',
     'Силли-Ванилли! Какая встреча!',
     'Ванилька, Ванилька... Помнишь старые времена?'
+  ],
+  whiteLily: [
+    'О, Белая Лилия... Какая неожиданность!',
+    'Лилия... Мы снова встретились.',
+    'Белая Лилия! Какая редкая гостья!'
   ],
   shuffle: [
     'Давайте перетасуем колоду~',
