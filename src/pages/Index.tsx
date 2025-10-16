@@ -167,88 +167,141 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-purple-900 via-purple-800 to-indigo-900"></div>
-      
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-pink-500 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-20 w-40 h-40 bg-blue-500 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/4 w-36 h-36 bg-yellow-500 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-b from-indigo-950 via-purple-950 to-slate-900">
+      <div className="absolute inset-0 opacity-10">
+        <img 
+          src="https://cdn.poehali.dev/files/b5531064-c1e2-47ac-a400-d4afa81fcc16.jpg"
+          alt="background"
+          className="w-full h-full object-cover blur-md"
+        />
       </div>
 
-      <div className="relative z-10 container mx-auto px-2 sm:px-4 py-4 sm:py-8">
-        <div className="text-center mb-4 sm:mb-8">
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-heading text-white mb-2 sm:mb-4 drop-shadow-2xl">
-            🎭 Shadow Milk 🎴
-          </h1>
-          <p className="text-sm sm:text-xl text-purple-200">Угадай следующую карту!</p>
-        </div>
+      <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-slate-900/95 to-slate-900/80 backdrop-blur-sm border-b-2 border-purple-500/30">
+        <div className="container mx-auto px-2 sm:px-4 py-2 sm:py-3">
+          <div className="flex items-center justify-between gap-2 sm:gap-4">
+            <div className="flex items-center gap-1 sm:gap-2 bg-purple-900/60 rounded-full px-2 sm:px-4 py-1 sm:py-2 border border-purple-400/30">
+              <Icon name="Target" className="text-purple-300" size={16} />
+              <span className="text-white font-bold text-xs sm:text-sm">{score}</span>
+            </div>
+            
+            <div className="flex-1 max-w-md bg-white/90 rounded-full px-3 sm:px-6 py-1 sm:py-2 border-2 border-purple-300">
+              <div className="flex items-center justify-center gap-1 sm:gap-2">
+                <Icon name="Coins" className="text-yellow-600" size={18} />
+                <span className="text-purple-900 font-bold text-sm sm:text-xl">{score * 100}</span>
+              </div>
+            </div>
 
-        <div className="max-w-6xl mx-auto">
+            <div className="flex items-center gap-1 sm:gap-2 bg-indigo-900/60 rounded-full px-2 sm:px-4 py-1 sm:py-2 border border-indigo-400/30">
+              <Icon name="Zap" className="text-indigo-300" size={16} />
+              <span className="text-white font-bold text-xs sm:text-sm">{streak}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="relative z-10 pt-16 sm:pt-20">
+        <div className="max-w-6xl mx-auto px-2 sm:px-4">
           <Tabs defaultValue="game" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-4">
-              <TabsTrigger value="game">Игра</TabsTrigger>
-              <TabsTrigger value="characters">Персонажи</TabsTrigger>
-              <TabsTrigger value="achievements">Достижения</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 mb-4 bg-slate-900/80 border border-purple-500/30">
+              <TabsTrigger value="game" className="data-[state=active]:bg-purple-600">Игра</TabsTrigger>
+              <TabsTrigger value="characters" className="data-[state=active]:bg-purple-600">Персонажи</TabsTrigger>
+              <TabsTrigger value="achievements" className="data-[state=active]:bg-purple-600">Достижения</TabsTrigger>
             </TabsList>
 
             <TabsContent value="game" className="space-y-4 sm:space-y-6">
-              <ScoreBoard score={score} streak={streak} highScore={highScore} />
 
               {!gameStarted ? (
-                <StartScreen 
-                  onStartGame={startGame}
-                  onToggleMusic={toggleBackgroundMusic}
-                  isMusicPlaying={isMusicPlaying}
-                />
-              ) : (
-                <div className="space-y-4 sm:space-y-8">
-                  <ShadowMilkCharacter 
-                    mood={shadowMood}
-                    dialogue={shadowDialogue}
-                    isShuffling={isShuffling}
-                    isDealingCard={isDealingCard}
+                <div className="min-h-[80vh] flex items-center justify-center">
+                  <StartScreen 
+                    onStartGame={startGame}
+                    onToggleMusic={toggleBackgroundMusic}
+                    isMusicPlaying={isMusicPlaying}
                   />
-
-                  <div className="relative pt-[35vh] sm:pt-48 pb-6 sm:pb-12">
-                    <div className="hidden sm:block">
-                      <DeckDisplay deckLength={deck.length} isShuffling={isShuffling} />
-                    </div>
-
-                    <div className="bg-gradient-to-br from-indigo-900/80 to-purple-900/80 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-12 border-4 sm:border-8 border-purple-700 shadow-2xl">
-                      <div className="flex flex-col sm:grid sm:grid-cols-3 gap-4 sm:gap-8 items-center">
-                        <GameCard 
-                          card={currentCard}
-                          flipped={flipped && !showResult}
-                        />
-
-                        <GameControls 
-                          showResult={showResult}
-                          onGuessHigher={() => makeGuess('higher')}
-                          onGuessLower={() => makeGuess('lower')}
-                          onNextRound={nextRound}
-                        />
-
-                        <GameCard 
-                          card={nextCard}
-                          flipped={flipped}
-                          isDealing={isDealingCard}
-                          isHidden={true}
-                          showResult={showResult}
-                          isCorrect={isCorrect}
-                        />
-                      </div>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-40 pointer-events-none">
+                    <div className="relative">
+                      <img 
+                        src={shadowMilkImages[shadowMood]} 
+                        alt="Shadow Milk" 
+                        className={`w-48 h-48 sm:w-64 sm:h-64 object-contain drop-shadow-2xl transition-all duration-500 ${
+                          isShuffling ? 'animate-bounce' : ''
+                        } ${
+                          isDealingCard ? 'animate-pulse' : ''
+                        }`}
+                      />
+                      {shadowDialogue && (
+                        <div className="absolute -bottom-8 sm:-bottom-12 left-1/2 transform -translate-x-1/2 bg-white/95 backdrop-blur-sm border-2 border-purple-500 rounded-2xl px-4 py-2 max-w-[250px] sm:max-w-sm shadow-xl pointer-events-auto">
+                          <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[8px] border-r-[8px] border-b-[10px] border-l-transparent border-r-transparent border-b-white"></div>
+                          <p className="text-xs sm:text-sm font-heading text-purple-900 text-center leading-tight">{shadowDialogue}</p>
+                        </div>
+                      )}
                     </div>
                   </div>
 
-                  <div className="text-center">
-                    <Button
-                      onClick={startGame}
-                      className="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 rounded-xl border-2 sm:border-4 border-gray-900 shadow-xl"
-                    >
-                      <Icon name="RotateCcw" className="mr-2" size={16} />
-                      Новая Игра
-                    </Button>
+                  <div className="pt-72 sm:pt-80 pb-6">
+                    <div className="bg-gradient-to-b from-blue-900/40 to-blue-950/60 backdrop-blur-sm rounded-3xl p-4 sm:p-8 border-2 border-blue-400/30 shadow-2xl">
+                      <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-center justify-center">
+                        <div className="flex-shrink-0">
+                          <GameCard 
+                            card={currentCard}
+                            flipped={flipped && !showResult}
+                          />
+                          <div className="text-center mt-2 text-white text-xs sm:text-sm font-bold">ROUND {Math.floor(score / 10) + 1}</div>
+                        </div>
+
+                        <div className="flex flex-col gap-3">
+                          <Button
+                            onClick={() => makeGuess('higher')}
+                            disabled={showResult}
+                            className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white text-lg sm:text-2xl px-8 sm:px-16 py-6 sm:py-8 rounded-2xl border-4 border-pink-300 shadow-2xl font-bold disabled:opacity-50 transform hover:scale-105 transition-all"
+                          >
+                            HIGH
+                          </Button>
+                          <Button
+                            onClick={() => makeGuess('lower')}
+                            disabled={showResult}
+                            className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white text-lg sm:text-2xl px-8 sm:px-16 py-6 sm:py-8 rounded-2xl border-4 border-cyan-300 shadow-2xl font-bold disabled:opacity-50 transform hover:scale-105 transition-all"
+                          >
+                            LOW
+                          </Button>
+                          {showResult && (
+                            <Button
+                              onClick={nextRound}
+                              className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-base sm:text-xl px-6 sm:px-12 py-4 sm:py-6 rounded-2xl border-4 border-green-300 shadow-2xl font-bold transform hover:scale-105 transition-all"
+                            >
+                              <Icon name="ArrowRight" className="mr-2" size={20} />
+                              Далее
+                            </Button>
+                          )}
+                        </div>
+
+                        <div className="flex-shrink-0 relative">
+                          <GameCard 
+                            card={nextCard}
+                            flipped={flipped}
+                            isDealing={isDealingCard}
+                            isHidden={true}
+                            showResult={showResult}
+                            isCorrect={isCorrect}
+                          />
+                          <div className="absolute -top-3 -right-3 bg-purple-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold border-2 border-purple-300">
+                            {deck.length}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="text-center mt-6">
+                      <Button
+                        onClick={startGame}
+                        className="bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 text-white text-sm px-6 py-3 rounded-xl border-2 border-gray-600 shadow-xl"
+                      >
+                        <Icon name="RotateCcw" className="mr-2" size={16} />
+                        Новая Игра
+                      </Button>
+                    </div>
                   </div>
                 </div>
               )}
